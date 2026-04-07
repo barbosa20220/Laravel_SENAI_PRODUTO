@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloaquent\Model;
+use Illuminate\Database\Eloquent\Model;
 class Produto extends Model{
     protected $fillable = [
         'nome',
         'quantidade',
         'preco'
     ];
+
+    // relacionamento produto - setor
+
+    // relacionamento produto - detalhe produto
 }

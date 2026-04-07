@@ -3,39 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Relatório de Produtos</title>
 </head>
 <body>
-    <h1>Relatorio de Produtos</h1>
-    <table border="1">
+
+    <h1>Relatório de Produtos</h1>
+
+    @if(session('success'))
+        <p style="color: green">{{ session('success') }}</p>
+    @endif
+
+    <table border="1" cellpadding="10">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>NOME</th>
-                <th>quantidade</th>
-                <th>preco</th>
-                <th>Atualizar</th>
-                <th>Deletar</th>
+                <th>QUANTIDADE</th>
+                <th>PREÇO</th>
+                <th>SETOR</th>
+                <th>DESCRIÇÃO</th>
+                <th>AÇÕES</th>
             </tr>
         </thead>
-        <tdody>
+
+        <tbody>
             @forelse ($produtos as $produto)
                 <tr>
                     <td>{{ $produto->id }}</td>
                     <td>{{ $produto->nome }}</td>
                     <td>{{ $produto->quantidade }}</td>
-                    <td>{{ $produto->preco }}</td>
-                    <td> 
-                        <a href="{{route('produto.atualizar', $produto->id)}}">Atualizar</a>    
+                    <td>R$ {{ $produto->preco }}</td>
+
+                    <td>{{ $produto->setor->nome ?? 'Sem setor' }}</td>
+
+                    <td>{{ $produto->detalhe->descricao ?? 'Sem detalhe' }}</td>
+
+                    <td>
+                        <a href="{{ route('produto.atualizar', $produto->id) }}">
+                            Atualizar
+                        </a>
+                        <form action="#" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">Deletar</button>
+                        </form>
                     </td>
-                    <td> Procura Outro Produto </td>
                 </tr>
             @empty 
                 <tr>
-                    <td colspan="4"> Nenhum produto encontrado</tr>
+                    <td colspan="7">Nenhum produto encontrado</td>
                 </tr>
             @endforelse 
-        </tdody>
+        </tbody>
     </table>
+
 </body>
 </html>
